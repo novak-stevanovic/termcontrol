@@ -1,7 +1,9 @@
 #include "tc_cursor.h"
+#include "tc_display.h"
 #include "misc.h"
 
 #include "primitives/tc_cursor_prims.h"
+#include <stdio.h>
 
 void _set_cursor_pos(size_t x, size_t y);
 
@@ -33,7 +35,21 @@ size_t tc_cursor_get_y()
 
 void _set_cursor_pos(size_t x, size_t y)
 {
-    //TODO
-    cursor.x = x;
-    cursor.y = y;
+    cursor.x = misc_flatten(0, x, tc_display_get_display_width() - 1);
+    cursor.y = misc_flatten(0, y, tc_display_get_display_height() - 1);
+}
+
+void tc_cursor_print_chr(char c)
+{
+    putchar(c);
+    if(cursor.x == (tc_display_get_display_width() - 1))
+    {
+        cursor.x = 0;
+        cursor.y++;
+    }
+    else
+    {
+        cursor.x++;
+    }
+
 }

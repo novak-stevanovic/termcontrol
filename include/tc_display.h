@@ -24,8 +24,11 @@ void tc_display_draw();
 /* Returns the current active tab displayed by module tc_display */
 struct TCTab* tc_display_get_current_tab();
 
-// size_t tc_display_get_display_height(); ??
-// size_t tc_display_get_display_width();
+/* Returns terminal window height */
+size_t tc_display_get_display_height();
+
+/* Returns terminal window width */
+size_t tc_display_get_display_width();
 
 /* Returns start x coordinate of any tab displayed by tc_display. */
 size_t tc_display_get_tab_start_x();

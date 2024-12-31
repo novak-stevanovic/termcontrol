@@ -48,7 +48,7 @@ void tc_cursor_abs_move_y(size_t row);
  * Calls the adequate cursor primitive for moving the cursor. Updates struct TCCursor cursor's x and y coordinates if needed. */
 void tc_cursor_abs_move(size_t row, size_t col);
 
-// void tc_cursor_print_chr(char c);
+void tc_cursor_print_chr(char c);
 // void tc_cursor_print_str(char* str, size_t str_len);
 
 #endif

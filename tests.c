@@ -44,7 +44,6 @@ int main(int argc, char *argv[])
     conf_term_opts();
 
     tc_init();
-    printf("Options loaded.\n");
 
     reset_opts();
     return 0;

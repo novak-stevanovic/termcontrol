@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 #include "tc_display.h"
+#include "tc_cursor.h"
 #include "tc_tab.h"
 #include "assert.h"
 #include "array.h"
@@ -61,9 +62,13 @@ void _update_display_size()
 void tc_display_draw()
 {
     // tc_display_draw_outline()
+    size_t cursor_x = tc_cursor_get_x();
+    size_t cursor_y = tc_cursor_get_y();
 
     struct TCTab* current_tab = tc_display_get_current_tab();
     tc_tab_draw(current_tab);
+
+    tc_cursor_abs_move(cursor_y, cursor_x);
 
 }
 
@@ -92,4 +97,14 @@ size_t tc_display_get_tab_end_y()
 {
     ASSERT(display.height > 0, "INVALID DISPLAY HEIGHT");
     return display.height - 1;
+}
+
+size_t tc_display_get_display_height()
+{
+    return display.height;
+}
+
+size_t tc_display_get_display_width()
+{
+    return display.width;
 }
