@@ -5,24 +5,27 @@
 #include <unistd.h>
 
 #include "tc_display.h"
-#include "tc_window.h"
-#include "tc_cursor.h"
+#include "tc_tab.h"
 #include "assert.h"
+#include "array.h"
 #include "misc.h"
+
+#define SIGWINCH 28
 
 void _update_display_size();
 void _update_display_handler(int sig);
 
 // ----------------------------------------------------------------------------
 
-struct Display
+struct TCDisplay
 {
     size_t height, width;
     struct Array* tabs;
     int current_tab_idx;
 };
 
-struct Display display;
+struct TCDisplay display;
+
 
 void _tc_display_init()
 {
@@ -41,7 +44,7 @@ void _update_display_handler(int sig)
     _update_display_size();
 }
 
-void update_display_size()
+void _update_display_size()
 {
     struct winsize win_size;
 
@@ -57,6 +60,16 @@ void update_display_size()
 
 void tc_display_draw()
 {
+    // tc_display_draw_outline()
+
+    struct TCTab* current_tab = tc_display_get_current_tab();
+    tc_tab_draw(current_tab);
+
+}
+
+struct TCTab* tc_display_get_current_tab()
+{
+    return arr_at(display.tabs, display.current_tab_idx);
 }
 
 size_t tc_display_get_tab_start_x()

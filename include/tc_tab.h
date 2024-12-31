@@ -3,12 +3,12 @@
 
 #include <stddef.h>
 
-#include "tc_window.h"
-#include "misc.h"
+struct TCTab;
+struct TCWindow;
 
-struct Tab;
-
-void tc_tab_init(struct Tab* tab);
-void tc_tab_set_active_window(struct Window* window);
+// void tc_tab_init(struct Tab* tab);
+/* Draws the specified <tab> on screen from scratch. Tab coordinates and dimensions are mandated by tc_display. */
+void tc_tab_draw(struct TCTab* tab);
+// void tc_tab_set_active_window(struct TCWindow* window);
 
 #endif

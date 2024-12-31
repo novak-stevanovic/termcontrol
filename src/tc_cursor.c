@@ -7,12 +7,12 @@ void _set_cursor_pos(size_t x, size_t y);
 
 // ------------------------------------------------------------------------------
 
-struct Cursor
+struct TCCursor
 {
     size_t x, y;
 };
 
-struct Cursor cursor;
+struct TCCursor cursor;
 
 void _tc_cursor_init()
 {
