@@ -18,8 +18,6 @@ void _update_display_handler(int sig);
 struct DisplayInfo
 {
     size_t _width, _height;
-    struct Tab tabs[MAX_TAB_COUNT];
-    size_t _tab_count;
     size_t curr_tab_idx;
 };
 

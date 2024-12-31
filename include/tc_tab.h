@@ -8,8 +8,7 @@
 
 struct Tab
 {
-    struct Window* left;
-    struct Window* right;
+    struct Window* first_window;
 };
 
 void tc_tab_init(struct Tab* tab);
