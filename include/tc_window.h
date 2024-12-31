@@ -1,12 +1,9 @@
-#ifndef _TC_WINDOW_H
-#define _TC_WINDOW_H
+#ifndef TC_WINDOW_H
+#define TC_WINDOW_H
 
 #include <stddef.h>
 
-struct Window
-{
-    size_t _start_x, _start_y, _end_x, _end_y;
-};
+struct Window;
 
 void tc_window_write(struct Window* window, char** content);
 

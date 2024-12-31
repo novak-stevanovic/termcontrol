@@ -7,6 +7,11 @@ void _set_cursor_pos(size_t x, size_t y);
 
 // ------------------------------------------------------------------------------
 
+struct Cursor
+{
+    size_t x, y;
+};
+
 struct Cursor cursor;
 
 void _tc_cursor_init()
@@ -18,17 +23,17 @@ void _tc_cursor_init()
 
 size_t tc_cursor_get_x()
 {
-    return cursor._x;
+    return cursor.x;
 }
 
 size_t tc_cursor_get_y()
 {
-    return cursor._y;
+    return cursor.y;
 }
 
 void _set_cursor_pos(size_t x, size_t y)
 {
     //TODO
-    cursor._x = x;
-    cursor._y = y;
+    cursor.x = x;
+    cursor.y = y;
 }

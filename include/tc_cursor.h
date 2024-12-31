@@ -1,13 +1,10 @@
-#ifndef _TC_CURSOR_H
-#define _TC_CURSOR_H
+#ifndef TC_CURSOR_H
+#define TC_CURSOR_H
 
 #include <stddef.h>
 #include <sys/types.h>
 
-struct Cursor
-{
-    size_t _x, _y;
-};
+struct Cursor;
 
 extern struct Cursor cursor;
 

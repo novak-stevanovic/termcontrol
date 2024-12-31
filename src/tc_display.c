@@ -10,18 +10,19 @@
 #include "assert.h"
 #include "misc.h"
 
-void _update_display_info();
+void _update_display_size();
 void _update_display_handler(int sig);
 
 // ----------------------------------------------------------------------------
 
-struct DisplayInfo
+struct Display
 {
-    size_t _width, _height;
-    size_t curr_tab_idx;
+    size_t height, width;
+    struct Array* tabs;
+    int current_tab_idx;
 };
 
-struct DisplayInfo display_info;
+struct Display display;
 
 void _tc_display_init()
 {
@@ -32,15 +33,15 @@ void _tc_display_init()
 
     ASSERT(status == 0, "Failure to set handler.");
 
-    _update_display_info();
+    _update_display_size();
 }
 
 void _update_display_handler(int sig)
 {
-    _update_display_info();
+    _update_display_size();
 }
 
-void _update_display_info()
+void update_display_size()
 {
     struct winsize win_size;
 
@@ -48,10 +49,14 @@ void _update_display_info()
 
     ASSERT(status == 0, "Failure to get window size.");
 
-    display_info._height = win_size.ws_row;
-    display_info._width = win_size.ws_col;
+    display.height = win_size.ws_row;
+    display.width = win_size.ws_col;
 
     // tc_cursor_fix_pos();
+}
+
+void tc_display_draw()
+{
 }
 
 size_t tc_display_get_tab_start_x()
@@ -66,12 +71,12 @@ size_t tc_display_get_tab_start_y()
 
 size_t tc_display_get_tab_end_x()
 {
-    ASSERT(display_info._width > 0, "INVALID DISPLAY WIDTH");
-    return display_info._width - 1;
+    ASSERT(display.width > 0, "INVALID DISPLAY WIDTH");
+    return display.width - 1;
 }
 
 size_t tc_display_get_tab_end_y()
 {
-    ASSERT(display_info._height > 0, "INVALID DISPLAY HEIGHT");
-    return display_info._height - 1;
+    ASSERT(display.height > 0, "INVALID DISPLAY HEIGHT");
+    return display.height - 1;
 }

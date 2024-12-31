@@ -1,8 +1,6 @@
-#ifndef _TC_VCURSOR_H
-#define _TC_VCURSOR_H
+#ifndef TC_VCURSOR_H
+#define TC_VCURSOR_H
 
-struct VCursor
-{
-};
+struct VCursor;
 
 #endif

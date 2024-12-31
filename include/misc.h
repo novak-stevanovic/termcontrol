@@ -1,5 +1,5 @@
-#ifndef _MISC_H
-#define _MISC_H
+#ifndef MISC_H
+#define MISC_H
 
 #include <stddef.h>
 
