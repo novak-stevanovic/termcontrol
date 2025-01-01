@@ -39,4 +39,7 @@ size_t tc_display_get_tab_end_x();
 /* Returns end y coordinate of any tab displayed by tc_display. */
 size_t tc_display_get_tab_end_y();
 
+/* Performs sizeof(struct TCDisplay) and returns the value */
+size_t tc_display_get_struct_size();
+
 #endif

@@ -9,7 +9,7 @@
 #include "tc_tab.h"
 #include "assert.h"
 #include "array.h"
-#include "misc.h"
+#include "primitives/tc_erase_prims.h"
 
 #define SIGWINCH 28
 
@@ -27,17 +27,20 @@ struct TCDisplay
 
 struct TCDisplay display;
 
-
 void _tc_display_init()
 {
+    prim_erase_screen();
     struct sigaction new_sigact;
     new_sigact.sa_handler = _update_display_handler;
-
     int status = sigaction(SIGWINCH, &new_sigact, NULL);
-
-    ASSERT(status == 0, "Failure to set handler.");
+    assert(status == 0);
 
     _update_display_size();
+    display.current_tab_idx = 0;
+    display.tabs = arr_init_dynamic(MAX_TAB_COUNT, tc_tab_get_struct_size());
+    struct TCTab* first_tab = tc_tab_init();
+    arr_append(display.tabs, first_tab);
+    free(first_tab);
 }
 
 void _update_display_handler(int sig)
@@ -51,7 +54,7 @@ void _update_display_size()
 
     int status = ioctl(STDOUT_FILENO, TIOCGWINSZ, &win_size);
 
-    ASSERT(status == 0, "Failure to get window size.");
+    assert(status == 0);
 
     display.height = win_size.ws_row;
     display.width = win_size.ws_col;
@@ -61,10 +64,10 @@ void _update_display_size()
 
 void tc_display_draw()
 {
-    // tc_display_draw_outline()
     size_t cursor_x = tc_cursor_get_x();
     size_t cursor_y = tc_cursor_get_y();
 
+    // tc_display_draw_outline()
     struct TCTab* current_tab = tc_display_get_current_tab();
     tc_tab_draw(current_tab);
 
@@ -89,14 +92,14 @@ size_t tc_display_get_tab_start_y()
 
 size_t tc_display_get_tab_end_x()
 {
-    ASSERT(display.width > 0, "INVALID DISPLAY WIDTH");
-    return display.width - 1;
+    assert(display.width > 0);
+    return display.width - 2;
 }
 
 size_t tc_display_get_tab_end_y()
 {
-    ASSERT(display.height > 0, "INVALID DISPLAY HEIGHT");
-    return display.height - 1;
+    assert(display.height > 0);
+    return display.height - 2;
 }
 
 size_t tc_display_get_display_height()
@@ -107,4 +110,9 @@ size_t tc_display_get_display_height()
 size_t tc_display_get_display_width()
 {
     return display.width;
+}
+
+size_t tc_display_get_struct_size()
+{
+    return sizeof(struct TCDisplay);
 }

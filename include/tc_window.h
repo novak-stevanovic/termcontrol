@@ -31,4 +31,9 @@ char** tc_window_get_content(struct TCWindow* window);
 /* Sets the window content for specified <window> to <content>. Keep in mind the dimensions of <content> as window will think the dimensions adhere to it's size */
 void tc_window_set_content(struct TCWindow* window, char** content);
 
+struct TCWindow* tc_window_init();
+
+/* Performs sizeof(struct TCWindow) and returns the value */
+size_t tc_window_get_struct_size();
+
 #endif

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include "tc_display.h"
 #include "termcontrol.h"
 
 struct termios init_opts;
@@ -40,10 +41,16 @@ void reset_opts()
 
 int main(int argc, char *argv[])
 {
+    printf("In main\n");
     load_init_opts();
     conf_term_opts();
 
     tc_init();
+
+    tc_display_draw();
+
+    char str[10];
+    read(STDIN_FILENO, &str, 1);
 
     reset_opts();
     return 0;
