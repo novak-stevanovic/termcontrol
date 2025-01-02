@@ -5,6 +5,8 @@
 #include "tc_display.h"
 #include "termcontrol.h"
 
+#include "primitives/tc_style_prims.h"
+
 struct termios init_opts;
 
 void conf_term_opts()
@@ -46,11 +48,18 @@ int main(int argc, char *argv[])
     conf_term_opts();
 
     tc_init();
+    // printf(COLOR_RED_BG_CODE);
+    // printf(COLOR_YELLOW_FG_CODE);
 
-    tc_display_draw();
+    // tc_display_draw();
 
     char str[10];
-    read(STDIN_FILENO, &str, 1);
+    while(1)
+    {
+        read(STDIN_FILENO, str, 1);
+        if(str[0] == 'q') break;
+        else printf("%c", str[0]);
+    }
 
     reset_opts();
     return 0;

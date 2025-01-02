@@ -33,6 +33,11 @@ size_t tc_cursor_get_y()
     return cursor.y;
 }
 
+void tc_cursor_conform_pos_to_scr()
+{
+    _set_cursor_pos(cursor.x, cursor.y);
+}
+
 void _set_cursor_pos(size_t x, size_t y)
 {
     cursor.x = misc_conform(0, x, tc_display_get_display_width() - 1);

@@ -1,0 +1,9 @@
+#ifndef TC_PRIMITIVES_H
+#define TC_PRIMITIVES_H
+
+#define CODE_BUFF_LEN 15
+extern char code_buff[CODE_BUFF_LEN];
+
+#define WRITE_CODE write(STDOUT_FILENO, code_buff, strlen(code_buff))
+
+#endif

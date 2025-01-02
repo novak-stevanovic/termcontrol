@@ -1,13 +1,9 @@
 #include "primitives/tc_cursor_prims.h"
+#include "primitives/tc_primitives.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-
-#define CODE_BUFF_LEN 15
-#define WRITE_CODE write(STDOUT_FILENO, code_buff, strlen(MOVE_CURSOR_HOME_CODE))
-
-char code_buff[CODE_BUFF_LEN];
 
 void prim_move_cursor_home()
 {

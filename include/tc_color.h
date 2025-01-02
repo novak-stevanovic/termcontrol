@@ -1,0 +1,6 @@
+#ifndef TC_COLOR_H
+#define TC_COLOR_H
+
+enum TCColor { BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, DEFAULT };
+
+#endif
