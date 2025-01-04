@@ -2,6 +2,7 @@
 #include "misc.h"
 #include "primitives/tc_erase_prims.h"
 #include "tc_color.h"
+#include "tc_shared.h"
 #include "vector.h"
 #include <assert.h>
 #include <stddef.h>
@@ -10,42 +11,45 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-#define VEC_INIT_ROW_COUNT 0
-#define VEC_ROW_RESIZE_COUNT 3
-#define VEC_INIT_COL_COUNT 0
-#define VEC_COL_RESIZE_COUNT 5
+#define VEC_MATRIX_ROW_BP 20,20,vec_get_struct_size()
+#define VEC_MATRIX_ELEMENT_BP 50,20,sizeof(TCDisplayCell)
 
 void _update_display_size();
 void _update_display_handler(int sig);
 void _conform_display_content_vector();
-
-struct Vector* col_vec_blueprint; // blueprint for adding element
-struct TCDisplayCell display_cell_blueprint;
-
-void _init_blueprints();
 
 // ---------------------------------------------------------------------------------------------------
 
 struct TCDisplay
 {
     size_t height, width;
-    struct Vector* content;
+    struct TCDisplayCell** content;
 };
 
 struct TCDisplay display = {0};
 
 void _tc_display_init()
 {
-    _init_blueprints();
     prim_erase_screen();
     struct sigaction new_sigact;
     new_sigact.sa_handler = _update_display_handler;
     int status = sigaction(SIGWINCH, &new_sigact, NULL);
     assert(status == 0);
 
-    display.content = vec_init(VEC_INIT_ROW_COUNT, VEC_ROW_RESIZE_COUNT, vec_get_struct_size());
-
+    display.content = (struct TCDisplayCell**)malloc(sizeof(struct TCDisplayCell*) * MAX_WINDOW_SIZE_Y);
+    int i, j;
+    for(i = 0; i < MAX_WINDOW_SIZE_Y; i++)
+    {
+        display.content[i] = (struct TCDisplayCell*)malloc(sizeof(char) * MAX_WINDOW_SIZE_X);
+        for(j = 0; j < MAX_WINDOW_SIZE_X; j++)
+        {
+            display.content[i][j].content = 'u';
+            display.content[i][j].bg_color = TC_COLOR_BLUE;
+            display.content[i][j].fg_color = TC_COLOR_RED;
+        }
+    }
     _update_display_size();
+
 }
 
 size_t tc_display_get_display_width()
@@ -81,25 +85,4 @@ void _update_display_size()
 
     _conform_display_content_vector();
     printf("%ld %ld\n", display.height, display.height);
-}
-
-void _conform_display_content_vector()
-{
-    misc_vec_conform(display.content, display.height, col_vec_blueprint);
-    int i;
-    for(i = 0; i < vec_get_count(display.content); i++)
-    {
-        printf("%d", i);
-        struct Vector* curr_row = vec_at(display.content, i);
-        misc_vec_conform(curr_row, display.width, &display_cell_blueprint);
-    }
-}
-
-void _init_blueprints()
-{
-    col_vec_blueprint = vec_init(VEC_INIT_COL_COUNT, VEC_COL_RESIZE_COUNT, sizeof(struct TCDisplayCell));
-
-    display_cell_blueprint.content = 'x';
-    display_cell_blueprint.bg_color = DEFAULT;
-    display_cell_blueprint.fg_color = MAGENTA;
 }

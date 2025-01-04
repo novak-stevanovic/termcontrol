@@ -9,12 +9,6 @@
 
 struct TCDisplay;
 
-struct TCDisplayCell
-{
-    enum TCColor fg_color, bg_color;
-    char content;
-};
-
 extern struct TCDisplay display;
 
 void _tc_display_init();

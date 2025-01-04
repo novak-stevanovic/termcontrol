@@ -1,6 +1,7 @@
 #include "misc.h"
 #include <assert.h>
 #include <stddef.h>
+#include <string.h>
 
 size_t misc_conform(int min, int suggested, int max)
 {
