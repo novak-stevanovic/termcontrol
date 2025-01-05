@@ -2,6 +2,7 @@
 #include "misc.h"
 #include "primitives/tc_erase_prims.h"
 #include "tc_color.h"
+#include "tc_cursor.h"
 #include "tc_shared.h"
 #include "vector.h"
 #include <assert.h>
@@ -16,7 +17,6 @@
 
 void _update_display_size();
 void _update_display_handler(int sig);
-void _conform_display_content_vector();
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -40,7 +40,7 @@ void _tc_display_init()
     int i, j;
     for(i = 0; i < MAX_WINDOW_SIZE_Y; i++)
     {
-        display.content[i] = (struct TCDisplayCell*)malloc(sizeof(char) * MAX_WINDOW_SIZE_X);
+        display.content[i] = (struct TCDisplayCell*)malloc(sizeof(struct TCDisplayCell) * MAX_WINDOW_SIZE_X);
         for(j = 0; j < MAX_WINDOW_SIZE_X; j++)
         {
             display.content[i][j].content = 'u';
@@ -50,6 +50,26 @@ void _tc_display_init()
     }
     _update_display_size();
 
+}
+
+void tc_display_draw_tc_window(struct TCWindow* tc_window)
+{
+    assert(tc_window != NULL);
+
+    int w_start_x = tc_window->tc_object.start_x;
+    int w_start_y = tc_window->tc_object.start_y;
+    int w_end_x = tc_window->tc_object.end_x;
+    int w_end_y = tc_window->tc_object.end_y;
+
+    int i,j;
+    for(i = w_start_y; i <= w_end_y; i++)
+    {
+        for(j = w_start_x; j <= w_end_x; j++)
+        {
+            tc_cursor_abs_move(i, j);
+            putchar(tc_window->content[i - w_start_y][j - w_start_x].content);
+        }
+    }
 }
 
 size_t tc_display_get_display_width()
@@ -83,6 +103,5 @@ void _update_display_size()
     //TODO
     // tc_cursor_fix_pos();
 
-    _conform_display_content_vector();
-    printf("%ld %ld\n", display.height, display.height);
+    printf("%ld %ld\n", display.height, display.width);
 }

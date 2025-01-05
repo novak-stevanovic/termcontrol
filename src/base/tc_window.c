@@ -12,7 +12,7 @@ void tc_window_init(struct TCWindow* tc_window, void (*init_func)(void*), void (
     int i, j;
     for(i = 0; i < MAX_WINDOW_SIZE_Y; i++)
     {
-        tc_window->content[i] = (struct TCDisplayCell*)malloc(sizeof(char) * MAX_WINDOW_SIZE_X);
+        tc_window->content[i] = (struct TCDisplayCell*)malloc(sizeof(struct TCDisplayCell) * MAX_WINDOW_SIZE_X);
         for(j = 0; j < MAX_WINDOW_SIZE_X; j++)
         {
             tc_window->content[i][j].content = 'u';

@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 #include "tc_display.h"
+#include "base/tc_window.h"
 #include "termcontrol.h"
 
 #include "primitives/tc_style_prims.h"
@@ -41,6 +42,10 @@ void reset_opts()
     tcsetattr(STDOUT_FILENO, TCSAFLUSH, &init_opts);
 }
 
+void a()
+{
+}
+
 int main(int argc, char *argv[])
 {
     printf("In main\n");
@@ -52,6 +57,16 @@ int main(int argc, char *argv[])
     // printf(COLOR_YELLOW_FG_CODE);
 
     // tc_display_draw();
+    struct TCWindow w;
+    tc_window_init(&w, a, a);
+
+    w.tc_object.start_x = 1;
+    w.tc_object.start_y = 10;
+
+    w.tc_object.end_x = 65;
+    w.tc_object.end_y = 25;
+
+    tc_display_draw_tc_window(&w);
 
     char str[10];
     while(1)
