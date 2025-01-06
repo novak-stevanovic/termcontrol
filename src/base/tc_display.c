@@ -1,7 +1,7 @@
 #include "base/tc_display.h"
 #include "tc_misc.h"
 #include "primitives/tc_erase_prims.h"
-#include "base/tc_color.h"
+#include "primitives/tc_color.h"
 #include "base/tc_cursor.h"
 #include "base/tc_shared.h"
 #include "vector.h"
@@ -64,9 +64,9 @@ void tc_display_draw_tc_window(TCWindow* tc_window)
     int w_end_y = tc_window->_base.end_y;
 
     int i,j;
-    for(i = w_start_y; i <= w_end_y; i++)
+    for(i = w_start_y; i < w_end_y; i++)
     {
-        for(j = w_start_x; j <= w_end_x; j++)
+        for(j = w_start_x; j < w_end_x; j++)
         {
             tc_cursor_abs_move(i, j);
             TCDisplayCell* content_cell = tc_window->get_content_at_func(tc_window, j, i);

@@ -1,7 +1,7 @@
 #ifndef TC_DISPLAY_CELL
 #define TC_DISPLAY_CELL
 
-#include "tc_color.h"
+#include "primitives/tc_color.h"
 
 typedef struct TCDisplayCell
 {

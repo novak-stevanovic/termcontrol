@@ -3,18 +3,12 @@ AR = ar
 
 INSTALL_PREFIX = /usr/local
 
-USED_LIBS = array
-C_OBJ_LIB_INCLUDES = -Ilib/array/include
-
 C_SRC = $(shell find src -name "*.c")
 C_OBJ = $(patsubst src/%.c,build/%.o,$(C_SRC))
-C_OBJ_FLAGS = -c -Iinclude -Wall $(C_OBJ_LIB_INCLUDES)
+C_OBJ_FLAGS = -c -Iinclude -Wall
 
 LIB = termcontrol
 AR_LIB = lib$(LIB).a
-# AR_LIB_L_FLAGS = -Llib/array
-# AR_LIB_l_FLAGS = array
-# AR_FLAGS = rcs $(AR_LIB_L_FLAGS) $(AR_LIB_l_FLAGS)
 AR_FLAGS = rcs
 
 .PHONY: clean install uninstall make_lib

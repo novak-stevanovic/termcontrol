@@ -1,6 +1,8 @@
 #ifndef TC_STYLE_PRIMS_H
 #define TC_STYLE_PRIMS_H
 
+enum TCColor;
+
 // #define GRAPHICS_SET_GRAPHICS_MODE_CODE "\e[%dm"
 #define GRAPHICS_RESET_MODE_CODE "\e[0m"
 
@@ -19,5 +21,7 @@
 
 // Background Colors
 #define COLOR_BG_CODE "\e[4%dm"
+
+int tc_color_get_code_for_tc_color(enum TCColor tc_color);
 
 #endif

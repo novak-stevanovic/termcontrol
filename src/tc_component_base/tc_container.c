@@ -1,6 +1,7 @@
+#include <assert.h>
+
 #include "tc_component_base/tc_container.h"
 #include "vector.h"
-#include <assert.h>
 
 void tc_container_init(TCContainer* tc_container, void (*draw_func)(void*))
 {

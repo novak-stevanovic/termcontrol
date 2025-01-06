@@ -9,14 +9,12 @@ typedef struct TCObject
 {
     size_t start_x, start_y, end_x, end_y;
 
-    // void (*init_func)(void*);
     void (*_draw_func)(void*); // arrange container or draw window on display
 } TCObject;
 
-// void tc_object_init(TCObject* tc_object, void (*init_func)(void*), void (*draw_func)(void*));
 void tc_object_init(TCObject* tc_object, void (*draw_func)(void*));
 
-void _tc_object_init_func();
+void tc_object_set_positions(TCObject* tc_object, size_t start_x, size_t start_y, size_t end_x, size_t end_y);
 
 #endif
 

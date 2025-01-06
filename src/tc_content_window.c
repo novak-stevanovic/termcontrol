@@ -8,9 +8,22 @@ void _tc_content_window_init_content(TCContentWindow* tc_window);
 
 // --------------------------------------------------------------------------------
 
-void _tc_content_window_draw_func(void* tc_content_window)
+void _tc_content_window_init( // for inheritance
+        TCContentWindow* tc_content_window, 
+        void (*draw_func)(void*),
+        TCDisplayCell* (*get_content_at_func)(struct TCWindow*, size_t, size_t),
+        void (*set_content_at_func)(struct TCWindow*, TCDisplayCell, size_t, size_t))
 {
-    tc_display_draw_tc_window((TCWindow*)tc_content_window);
+    _tc_window_init((TCWindow*)tc_content_window, draw_func, get_content_at_func, set_content_at_func);
+}
+
+void tc_content_window_init(TCContentWindow* tc_content_window)
+{
+    _tc_content_window_init(tc_content_window,
+            tc_window_draw_func,
+            _tc_content_window_get_content_at_func,
+            _tc_content_window_set_content_at_func);
+    
 }
 
 TCDisplayCell* _tc_content_window_get_content_at_func(struct TCWindow* tc_content_window, size_t x, size_t y)
@@ -42,4 +55,3 @@ void _tc_content_window_init_content(TCContentWindow* tc_window)
         }
     }
 }
-
