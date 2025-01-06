@@ -1,6 +1,6 @@
 #include "termcontrol.h"
-#include "tc_display.h"
-#include "tc_cursor.h"
+#include "base/tc_display.h"
+#include "base/tc_cursor.h"
 
 void tc_init()
 {

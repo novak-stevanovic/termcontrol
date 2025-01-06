@@ -1,9 +1,7 @@
 #ifndef TC_CONTAINER_H
 #define TC_CONTAINER_H
 
-#include "base/tc_object.h"
-
-#define TC_CONTAINER_MAX_CHILDREN 20
+#include "tc_component_base/tc_object.h"
 
 struct TCContainer
 {

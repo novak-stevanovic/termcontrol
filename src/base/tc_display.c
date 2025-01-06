@@ -1,9 +1,9 @@
-#include "tc_display.h"
+#include "base/tc_display.h"
 #include "misc.h"
 #include "primitives/tc_erase_prims.h"
-#include "tc_color.h"
-#include "tc_cursor.h"
-#include "tc_shared.h"
+#include "base/tc_color.h"
+#include "base/tc_cursor.h"
+#include "base/tc_shared.h"
 #include "vector.h"
 #include <assert.h>
 #include <stddef.h>
@@ -12,11 +12,9 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-#define VEC_MATRIX_ROW_BP 20,20,vec_get_struct_size()
-#define VEC_MATRIX_ELEMENT_BP 50,20,sizeof(TCDisplayCell)
-
 void _update_display_size();
 void _update_display_handler(int sig);
+void _tc_display_content_init();
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -36,6 +34,12 @@ void _tc_display_init()
     int status = sigaction(SIGWINCH, &new_sigact, NULL);
     assert(status == 0);
 
+    _tc_display_content_init();
+    _update_display_size();
+}
+
+void _tc_display_content_init()
+{
     display.content = (struct TCDisplayCell**)malloc(sizeof(struct TCDisplayCell*) * MAX_WINDOW_SIZE_Y);
     int i, j;
     for(i = 0; i < MAX_WINDOW_SIZE_Y; i++)
@@ -48,8 +52,6 @@ void _tc_display_init()
             display.content[i][j].fg_color = TC_COLOR_RED;
         }
     }
-    _update_display_size();
-
 }
 
 void tc_display_draw_tc_window(struct TCWindow* tc_window)

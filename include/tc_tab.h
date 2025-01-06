@@ -1,7 +1,7 @@
 #ifndef TC_TAB_H
 #define TC_TAB_H
 
-#include "base/tc_container.h"
+#include "tc_component_base/tc_container.h"
 
 struct TCTab
 {

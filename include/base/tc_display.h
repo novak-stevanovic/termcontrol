@@ -2,7 +2,7 @@
 #define TC_DISPLAY_H
 
 #include <stddef.h>
-#include "base/tc_window.h"
+#include "tc_component_base/tc_window.h"
 #include "tc_color.h"
 
 #define SIGWINCH 28

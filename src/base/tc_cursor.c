@@ -1,5 +1,5 @@
-#include "tc_cursor.h"
-#include "tc_display.h"
+#include "base/tc_cursor.h"
+#include "base/tc_display.h"
 #include "misc.h"
 
 #include "primitives/tc_cursor_prims.h"

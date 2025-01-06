@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "tc_display.h"
-#include "base/tc_window.h"
+#include "base/tc_display.h"
+#include "tc_component_base/tc_window.h"
 #include "termcontrol.h"
 
 #include "primitives/tc_style_prims.h"
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 
     // tc_display_draw();
     struct TCWindow w;
-    tc_window_init(&w, a, a);
+    tc_window_init(&w);
 
     w.tc_object.start_x = 1;
     w.tc_object.start_y = 10;
