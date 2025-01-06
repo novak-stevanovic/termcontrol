@@ -6,10 +6,10 @@
 #define ERASE_START_TO_CURSOR_LINE_CODE "\e[1K"
 #define ERASE_ENTIRE_LINE_CODE "\e[2K"
 
-void prim_erase_screen();
+void tc_prim_erase_screen();
 
-void prim_erase_line();
-void prim_erase_line_start_to_cursor();
-void prim_erase_line_cursor_to_end();
+void tc_prim_erase_line();
+void tc_prim_erase_line_start_to_cursor();
+void tc_prim_erase_line_cursor_to_end();
 
 #endif

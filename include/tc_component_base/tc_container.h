@@ -3,14 +3,14 @@
 
 #include "tc_component_base/tc_object.h"
 
-struct TCContainer
+typedef struct TCContainer
 {
-    struct TCObject tc_base;
-    struct Vector* children;
-};
+    TCObject _base;
+    struct Vector* _children;
+} TCContainer;
 
-void tc_container_init(struct TCContainer* tc_container, void (*init_func)(void*), void (*draw_func)(void*));
+void tc_container_init(TCContainer* tc_container, void (*draw_func)(void*));
 
-void tc_container_draw(void* tc_container);
+struct Vector* tc_container_get_children(TCContainer* tc_container);
 
 #endif

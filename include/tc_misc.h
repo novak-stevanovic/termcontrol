@@ -1,5 +1,5 @@
-#ifndef MISC_H
-#define MISC_H
+#ifndef TC_MISC_H
+#define TC_MISC_H
 
 #include <stddef.h>
 #include "vector.h"

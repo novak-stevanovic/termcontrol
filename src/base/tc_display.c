@@ -1,5 +1,5 @@
 #include "base/tc_display.h"
-#include "misc.h"
+#include "tc_misc.h"
 #include "primitives/tc_erase_prims.h"
 #include "base/tc_color.h"
 #include "base/tc_cursor.h"
@@ -18,17 +18,17 @@ void _tc_display_content_init();
 
 // ---------------------------------------------------------------------------------------------------
 
-struct TCDisplay
+typedef struct TCDisplay
 {
     size_t height, width;
-    struct TCDisplayCell** content;
-};
+    TCDisplayCell** content;
+} TCDisplay;
 
-struct TCDisplay display = {0};
+TCDisplay display = {0};
 
 void _tc_display_init()
 {
-    prim_erase_screen();
+    tc_prim_erase_screen();
     struct sigaction new_sigact;
     new_sigact.sa_handler = _update_display_handler;
     int status = sigaction(SIGWINCH, &new_sigact, NULL);
@@ -40,11 +40,11 @@ void _tc_display_init()
 
 void _tc_display_content_init()
 {
-    display.content = (struct TCDisplayCell**)malloc(sizeof(struct TCDisplayCell*) * MAX_WINDOW_SIZE_Y);
+    display.content = (TCDisplayCell**)malloc(sizeof(TCDisplayCell*) * MAX_WINDOW_SIZE_Y);
     int i, j;
     for(i = 0; i < MAX_WINDOW_SIZE_Y; i++)
     {
-        display.content[i] = (struct TCDisplayCell*)malloc(sizeof(struct TCDisplayCell) * MAX_WINDOW_SIZE_X);
+        display.content[i] = (TCDisplayCell*)malloc(sizeof(TCDisplayCell) * MAX_WINDOW_SIZE_X);
         for(j = 0; j < MAX_WINDOW_SIZE_X; j++)
         {
             display.content[i][j].content = 'u';
@@ -54,14 +54,14 @@ void _tc_display_content_init()
     }
 }
 
-void tc_display_draw_tc_window(struct TCWindow* tc_window)
+void tc_display_draw_tc_window(TCWindow* tc_window)
 {
     assert(tc_window != NULL);
 
-    int w_start_x = tc_window->tc_object.start_x;
-    int w_start_y = tc_window->tc_object.start_y;
-    int w_end_x = tc_window->tc_object.end_x;
-    int w_end_y = tc_window->tc_object.end_y;
+    int w_start_x = tc_window->_base.start_x;
+    int w_start_y = tc_window->_base.start_y;
+    int w_end_x = tc_window->_base.end_x;
+    int w_end_y = tc_window->_base.end_y;
 
     int i,j;
     for(i = w_start_y; i <= w_end_y; i++)
@@ -69,8 +69,25 @@ void tc_display_draw_tc_window(struct TCWindow* tc_window)
         for(j = w_start_x; j <= w_end_x; j++)
         {
             tc_cursor_abs_move(i, j);
-            putchar(tc_window->content[i - w_start_y][j - w_start_x].content);
+            TCDisplayCell* content_cell = tc_window->get_content_at_func(tc_window, j, i);
+            putchar(content_cell->content);
         }
+    }
+}
+
+void tc_display_draw_tc_object_tree(TCContainer* tc_container)
+{
+    if(tc_container == NULL) return;
+    assert(tc_container->_children != NULL);
+
+    tc_container->_base._draw_func(tc_container);
+
+    int i;
+    for(i = 0; i < vec_get_count(tc_container->_children); i++)
+    {
+        TCObject** curr_child = vec_at(tc_container->_children, i); //TODO ???
+        assert((*curr_child)->_draw_func != NULL);
+        (*curr_child)->_draw_func(*curr_child);
     }
 }
 

@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <sys/types.h>
 
-struct TCCursor;
+typedef struct TCCursor TCCursor;
 
 extern struct TCCursor cursor;
 

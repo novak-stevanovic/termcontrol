@@ -3,15 +3,21 @@
 
 #include "tc_component_base/tc_container.h"
 
-struct TCTab
+#define TC_TAB_MAX_WINDOW_COUNT 10
+
+typedef struct TCTab
 {
-    struct TCContainer tc_container;
+    TCContainer _base;
+    struct Array* _windows;
     int color;
-};
+} TCTab;
 
-void tc_tab_init(struct TCTab* tc_tab, int color);
+void _tc_tab_init(TCContainer* tc_container, void (*draw_func)(void*)); // for inheritance
 
-void tc_tab_init_func(void* tc_tab);
+#define TC_TAB_INIT(tc_c) _tc_tab_init(tc_c, tc_tab_draw_func);
+
 void tc_tab_draw_func(void* tc_tab);
+
+struct Array* tc_tab_get_windows(TCTab* tc_tab);
 
 #endif

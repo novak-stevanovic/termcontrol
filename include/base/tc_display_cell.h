@@ -3,10 +3,10 @@
 
 #include "tc_color.h"
 
-struct TCDisplayCell
+typedef struct TCDisplayCell
 {
     enum TCColor fg_color, bg_color;
     char content;
-};
+} TCDisplayCell;
 
 #endif

@@ -4,13 +4,18 @@
 #include "tc_component_base/tc_object.h"
 #include "base/tc_display_cell.h"
 
-struct TCWindow
+typedef struct TCWindow
 {
-    struct TCObject tc_object;
-    struct TCDisplayCell** content;
-};
+    struct TCObject _base;
+    TCDisplayCell* (*get_content_at_func)(struct TCWindow*, size_t, size_t);
+    void (*set_content_at_func)(struct TCWindow*, TCDisplayCell, size_t, size_t);
+} TCWindow;
 
-void tc_window_init(struct TCWindow* tc_window); // constructor
-void _tc_window_init_base(struct TCWindow* tc_window, void (*init_func)(void*), void (*draw_func)(void*)); // for inheritance
+// void _tc_window_init_base(TCWindow* tc_window, void (*init_func)(void*), void (*draw_func)(void*));
+void tc_window_init(
+        TCWindow* tc_window, 
+        void (*draw_func)(void*),
+        TCDisplayCell* (*get_content_at_func)(struct TCWindow*, size_t, size_t),
+        void (*set_content_at_func)(struct TCWindow*, TCDisplayCell, size_t, size_t)); // constructor
 
 #endif

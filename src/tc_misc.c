@@ -1,4 +1,4 @@
-#include "misc.h"
+#include "tc_misc.h"
 #include <assert.h>
 #include <stddef.h>
 #include <string.h>

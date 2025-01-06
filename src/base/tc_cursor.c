@@ -1,6 +1,6 @@
 #include "base/tc_cursor.h"
 #include "base/tc_display.h"
-#include "misc.h"
+#include "tc_misc.h"
 
 #include "primitives/tc_cursor_prims.h"
 #include <stdio.h>
@@ -9,16 +9,16 @@ void _set_cursor_pos(size_t x, size_t y);
 
 // ------------------------------------------------------------------------------
 
-struct TCCursor
+typedef struct TCCursor
 {
     size_t x, y;
-};
+} TCCursor;
 
-struct TCCursor cursor;
+TCCursor cursor;
 
 void _tc_cursor_init()
 {
-    prim_move_cursor_home();
+    tc_prim_move_cursor_home();
 
     _set_cursor_pos(0, 0);
 }
@@ -67,25 +67,25 @@ void tc_cursor_rel_move(int row_diff, int col_diff)
 
 void tc_cursor_rel_move_y(int row_diff)
 {
-    ((row_diff > 0) ? prim_move_cursor_down(row_diff) : prim_move_cursor_up(-row_diff));
+    ((row_diff > 0) ? tc_prim_move_cursor_down(row_diff) : tc_prim_move_cursor_up(-row_diff));
     _set_cursor_pos(cursor.x, cursor.y + row_diff);
 }
 
 void tc_cursor_rel_move_x(int col_diff)
 {
-    ((col_diff > 0) ? prim_move_cursor_right(col_diff) : prim_move_cursor_left(-col_diff));
+    ((col_diff > 0) ? tc_prim_move_cursor_right(col_diff) : tc_prim_move_cursor_left(-col_diff));
     _set_cursor_pos(cursor.x + col_diff, cursor.y);
 }
 
 void tc_cursor_abs_reset()
 {
-    prim_move_cursor_home();
+    tc_prim_move_cursor_home();
     _set_cursor_pos(0, 0);
 }
 
 void tc_cursor_abs_move_x(size_t col)
 {
-    prim_move_cursor_to_col(col);
+    tc_prim_move_cursor_to_col(col);
     _set_cursor_pos(col, cursor.y);
 }
 
@@ -96,6 +96,6 @@ void tc_cursor_abs_move_y(size_t row)
 
 void tc_cursor_abs_move(size_t row, size_t col)
 {
-    prim_move_cursor_to_line_col(row, col);
+    tc_prim_move_cursor_to_line_col(row, col);
     _set_cursor_pos(col, row);
 }
