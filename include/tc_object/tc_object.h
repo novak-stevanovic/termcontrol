@@ -5,7 +5,7 @@
 
 struct Array;
 
-typedef struct TCObject
+typedef struct TCObject // "ABSTRACT"
 {
     size_t start_x, start_y, end_x, end_y;
 

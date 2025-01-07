@@ -68,7 +68,7 @@ void tc_display_draw_tc_window(TCWindow* tc_window)
         for(j = w_start_x; j < w_end_x; j++)
         {
             tc_cursor_abs_move(i, j);
-            TCDisplayCell* content_cell = tc_window_get_content_at(tc_window, j, i);
+            TCDisplayCell* content_cell = tc_window->get_content_at_func(tc_window, j, i);
             putchar(content_cell->content);
         }
     }
@@ -118,8 +118,7 @@ void _update_display_size()
     display.height = win_size.ws_row;
     display.width = win_size.ws_col;
 
-    //TODO
-    // tc_cursor_fix_pos();
+    tc_cursor_conform_pos_to_scr();
 
     printf("%ld %ld\n", display.height, display.width);
 }

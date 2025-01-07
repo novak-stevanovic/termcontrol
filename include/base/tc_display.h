@@ -2,8 +2,8 @@
 #define TC_DISPLAY_H
 
 #include <stddef.h>
-#include "tc_component_base/tc_window.h"
-#include "tc_component_base/tc_container.h"
+#include "tc_object/window/tc_window.h"
+#include "tc_object/container/tc_container.h"
 
 #define SIGWINCH 28
 

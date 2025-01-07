@@ -1,9 +1,9 @@
 #ifndef TC_CONTAINER_H
 #define TC_CONTAINER_H
 
-#include "tc_component_base/tc_object.h"
+#include "tc_object/tc_object.h"
 
-typedef struct TCContainer
+typedef struct TCContainer // "ABSTRACT"
 {
     TCObject _base;
     struct Vector* _children;

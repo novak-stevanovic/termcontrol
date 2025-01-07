@@ -1,0 +1,3 @@
+#ifndef TC_BORDER_LAYOUT_MANAGER_H
+#define TC_BORDER_LAYOUT_MANAGER_H
+#endif
