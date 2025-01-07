@@ -4,6 +4,57 @@
 #include "assert.h"
 #include <stdio.h>
 
+void _tc_tab_set_window_positions(TCTab* tc_tab);
+
+// ----------------------------------------------------------------------------------------------------------------
+
+void _tc_tab_init(TCTab* tc_tab, void (*draw_func)(void*))
+{
+    tc_container_init((TCContainer*)tc_tab, draw_func);
+}
+
+void tc_tab_init(TCTab* tc_tab)
+{
+    _tc_tab_init(tc_tab, tc_tab_draw_func);
+}
+
+void tc_tab_draw_func(void* tc_tab_obj)
+{
+    TCTab* tc_tab = (TCTab*)tc_tab_obj;
+    _tc_tab_set_window_positions(tc_tab);
+    tc_tab->_windows = arr_init(TC_TAB_MAX_WINDOW_COUNT, sizeof(TCWindow*));
+}
+
+struct Array* tc_tab_get_window_at(TCTab* tc_tab, size_t idx)
+{
+}
+
+struct Array* tc_tab_set_window_at(TCTab* tc_tab, size_t idx)
+{
+}
+
+void tc_tab_add_window(TCTab* tc_tab, TCWindow* tc_window)
+{
+}
+
+void tc_tab_remove_window(TCTab* tc_tab, TCWindow* tc_window)
+{
+}
+
+void tc_tab_remove_window_at(TCTab* tc_tab, size_t idx)
+{
+}
+
+enum TCTabLayout tc_tab_get_layout(TCTab* tc_tab)
+{
+}
+
+void tc_tab_set_layout(TCTab* tc_tab, enum TCTabLayout layout)
+{
+}
+
+// ----------------------------------------------------------------------------------------------------------------
+
 void _tc_tab_set_window_positions(TCTab* tc_tab)
 {
     assert(tc_tab != NULL);
@@ -62,43 +113,4 @@ void _tc_tab_set_window_positions(TCTab* tc_tab)
             exit(1);
         }
     }
-}
-
-void _tc_tab_init(TCTab* tc_tab, void (*draw_func)(void*))
-{
-    tc_container_init((TCContainer*)tc_tab, draw_func);
-    tc_tab->_windows = arr_init(TC_TAB_MAX_WINDOW_COUNT, sizeof(TCWindow*));
-    // LAYOUT
-}
-
-void tc_tab_init(TCTab* tc_tab)
-{
-    assert(tc_tab != NULL);
-
-    tc_container_init((TCContainer*)tc_tab, tc_tab_draw_func);
-}
-
-void tc_tab_draw_func(void* tc_tab)
-{
-    assert(tc_tab != NULL);
-}
-
-struct Array* tc_tab_get_windows(TCTab* tc_tab)
-{
-    assert(tc_tab != NULL);
-    return tc_tab->_windows;
-}
-
-enum TCTabLayout tc_tab_get_layout(TCTab* tc_tab)
-{
-    assert(tc_tab != NULL);
-
-    return tc_tab->_layout;
-}
-
-void tc_tab_set_layout(TCTab* tc_tab, enum TCTabLayout layout)
-{
-    assert(tc_tab != NULL);
-
-    tc_tab->_layout = layout;
 }

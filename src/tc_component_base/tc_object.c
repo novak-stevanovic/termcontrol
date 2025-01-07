@@ -1,5 +1,4 @@
 #include "tc_component_base/tc_object.h"
-#include "array.h"
 
 void tc_object_init(TCObject* tc_object, void (*draw_func)(void*))
 {

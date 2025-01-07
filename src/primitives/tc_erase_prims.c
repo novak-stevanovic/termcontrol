@@ -2,7 +2,6 @@
 #include "primitives/tc_primitives.h"
 #include <stddef.h>
 #include <stdio.h>
-#include <string.h>
 #include <unistd.h>
 
 void tc_prim_erase_screen()

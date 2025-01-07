@@ -1,5 +1,4 @@
 #include "base/tc_display.h"
-#include "tc_misc.h"
 #include "primitives/tc_erase_prims.h"
 #include "primitives/tc_color.h"
 #include "base/tc_cursor.h"
@@ -69,7 +68,7 @@ void tc_display_draw_tc_window(TCWindow* tc_window)
         for(j = w_start_x; j < w_end_x; j++)
         {
             tc_cursor_abs_move(i, j);
-            TCDisplayCell* content_cell = tc_window->get_content_at_func(tc_window, j, i);
+            TCDisplayCell* content_cell = tc_window_get_content_at(tc_window, j, i);
             putchar(content_cell->content);
         }
     }

@@ -2,11 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "base/tc_display.h"
-#include "tc_component_base/tc_window.h"
 #include "termcontrol.h"
-
-#include "primitives/tc_style_prims.h"
 
 struct termios init_opts;
 
