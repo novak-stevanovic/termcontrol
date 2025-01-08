@@ -13,7 +13,7 @@ extern struct TCDisplay display;
 
 void _tc_display_init();
 
-void tc_display_draw_tc_window(struct TCWindow* tc_window);
+void tc_display_draw_tc_window(struct TCWindow* tc_win);
 void tc_display_draw_tc_object_tree(struct TCContainer* tc_container);
 
 size_t tc_display_get_display_width();

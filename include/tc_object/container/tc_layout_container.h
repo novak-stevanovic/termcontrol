@@ -13,7 +13,7 @@ typedef struct TCLayoutContainer // "ABSTRACT"
     struct TCLayoutManager* _layout_manager;
 } TCLayoutContainer;
 
-void tc_layout_container_init(TCContainer* tc_container, struct TCLayoutManager* layout_manager); // constructor
-void tc_layout_container_draw_func(void* tc_container);
+void tc_layout_container_init(TCContainer* container, struct TCLayoutManager* layout_manager); // constructor
+void tc_layout_container_draw_func(void* container);
 
 #endif

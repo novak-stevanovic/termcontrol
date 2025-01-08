@@ -53,14 +53,14 @@ void _tc_display_content_init()
     }
 }
 
-void tc_display_draw_tc_window(TCWindow* tc_window)
+void tc_display_draw_tc_window(TCWindow* window)
 {
-    assert(tc_window != NULL);
+    assert(window != NULL);
 
-    int w_start_x = tc_window->_base.start_x;
-    int w_start_y = tc_window->_base.start_y;
-    int w_end_x = tc_window->_base.end_x;
-    int w_end_y = tc_window->_base.end_y;
+    int w_start_x = window->_base.start_x;
+    int w_start_y = window->_base.start_y;
+    int w_end_x = window->_base.end_x;
+    int w_end_y = window->_base.end_y;
 
     int i,j;
     for(i = w_start_y; i < w_end_y; i++)
@@ -68,23 +68,23 @@ void tc_display_draw_tc_window(TCWindow* tc_window)
         for(j = w_start_x; j < w_end_x; j++)
         {
             tc_cursor_abs_move(i, j);
-            TCDisplayCell* content_cell = tc_window->get_content_at_func(tc_window, j, i);
+            TCDisplayCell* content_cell = tc_window_get_content_at(window, i, j);
             putchar(content_cell->content);
         }
     }
 }
 
-void tc_display_draw_tc_object_tree(TCContainer* tc_container)
+void tc_display_draw_tc_object_tree(TCContainer* container)
 {
-    if(tc_container == NULL) return;
-    assert(tc_container->_children != NULL);
+    if(container == NULL) return;
+    assert(container->_children != NULL);
 
-    tc_container->_base._draw_func(tc_container);
+    container->_base._draw_func(container);
 
     int i;
-    for(i = 0; i < vec_get_count(tc_container->_children); i++)
+    for(i = 0; i < vec_get_count(container->_children); i++)
     {
-        TCObject** curr_child = vec_at(tc_container->_children, i); //TODO ???
+        TCObject** curr_child = vec_at(container->_children, i); //TODO ???
         assert((*curr_child)->_draw_func != NULL);
         (*curr_child)->_draw_func(*curr_child);
     }

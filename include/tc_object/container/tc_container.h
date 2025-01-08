@@ -9,8 +9,8 @@ typedef struct TCContainer // "ABSTRACT"
     struct Vector* _children;
 } TCContainer;
 
-void tc_container_init(TCContainer* tc_container, void (*draw_func)(void*));
+void tc_container_init(TCContainer* container, void (*draw_func)(void*));
 
-struct Vector* tc_container_get_children(TCContainer* tc_container);
+struct Vector* tc_container_get_children(TCContainer* container);
 
 #endif
