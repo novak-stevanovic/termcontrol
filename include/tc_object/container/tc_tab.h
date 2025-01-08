@@ -5,12 +5,14 @@
 
 #define TC_TAB_MAX_WINDOW_COUNT 2
 
+struct Array;
+
 typedef struct TCTab
 {
     TCLayoutContainer _base;
     struct Array* _windows;
 } TCTab;
 
-void tc_tab_init(TCTab* tc_tab); // constructor
+void tc_tab_init(TCTab* tab); // constructor
 
 #endif

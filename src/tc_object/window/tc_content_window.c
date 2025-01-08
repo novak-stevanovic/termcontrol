@@ -3,28 +3,22 @@
 #include "tc_object/window/tc_content_window.h"
 #include "base/tc_shared.h"
 
-void _tc_content_window_init_content(TCContentWindow* cwidnow);
+void _tc_content_window_init_content(TCContentWindow* content_window);
 
 // ---------------------------------------------------------------------------------------------------
 
-void _tc_content_window_init(TCContentWindow* cwidnow,
-        void (*draw_func)(void*),
-        TCDisplayCell* (*get_content_at_func)(TCWindow*, size_t, size_t))
+void tc_content_window_init(TCContentWindow* content_window)
 {
-    _tc_window_init((TCWindow*)cwidnow, draw_func, get_content_at_func);
-    _tc_content_window_init_content(cwidnow);
+    tc_window_init((TCWindow*)content_window, _tc_content_window_get_content_at_func);
+
+    _tc_content_window_init_content(content_window);
 }
 
-void tc_content_window_init(TCContentWindow* cwidnow)
+void _tc_content_window_set_content_at(TCContentWindow* content_window, size_t x, size_t y, TCDisplayCell* content_bp)
 {
-    _tc_content_window_init(cwidnow, tc_window_draw_func, _tc_content_window_get_content_at_func);
-}
-
-void _tc_content_window_set_content_at(TCContentWindow* cwidnow, size_t x, size_t y, TCDisplayCell* content_bp)
-{
-    cwidnow->_content[y][x].content = content_bp->content;
-    cwidnow->_content[y][x].bg_color = content_bp->bg_color;
-    cwidnow->_content[y][x].fg_color = content_bp->fg_color;
+    content_window->_content[y][x].content = content_bp->content;
+    content_window->_content[y][x].bg_color = content_bp->bg_color;
+    content_window->_content[y][x].fg_color = content_bp->fg_color;
 }
 
 TCDisplayCell* _tc_content_window_get_content_at_func(TCWindow* cwidnow, size_t x, size_t y)

@@ -4,20 +4,15 @@
 
 // ------------------------------------------------------------------------------------------------------------------------------------
 
-void _tc_window_init(TCWindow* window, void (*draw_func)(void*), TCDisplayCell* (*get_content_at_func)(TCWindow*, size_t, size_t))
+void tc_window_init(TCWindow* window, TCDisplayCell* (*get_content_at_func)(TCWindow*, size_t, size_t))
 {
-    tc_object_init((TCObject*)window, draw_func);
+    tc_object_init((TCObject*)window, _tc_window_draw_func);
     window->get_content_at_func = get_content_at_func;
 }
 
-void tc_window_init(TCWindow* window, TCDisplayCell* (*get_content_at_func)(TCWindow*, size_t, size_t))
+void _tc_window_draw_func(void* window)
 {
-    _tc_window_init(window, tc_window_draw_func, get_content_at_func);
-}
-
-void tc_window_draw_func(void* indow)
-{
-    tc_display_draw_tc_window(indow);
+    tc_display_draw_tc_window(window);
 }
 
 TCDisplayCell* tc_window_get_content_at(TCWindow* window, size_t x, size_t y)

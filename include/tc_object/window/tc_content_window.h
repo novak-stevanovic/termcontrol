@@ -10,14 +10,10 @@ typedef struct TCContentWindow
     TCDisplayCell** _content;
 } TCContentWindow;
 
-void _tc_content_window_init(TCContentWindow* tc_cont_window,
-        void (*draw_func)(void*),
-        TCDisplayCell* (*get_content_at_func)(TCWindow*, size_t, size_t));
+void tc_content_window_init(TCContentWindow* content_window);
 
-void tc_content_window_init(TCContentWindow* tc_cont_window);
+void _tc_content_window_set_content_at(TCContentWindow* content_window, size_t x, size_t y, TCDisplayCell* content_bp);
 
-void _tc_content_window_set_content_at(TCContentWindow* tc_window, size_t x, size_t y, TCDisplayCell* content_bp);
-
-TCDisplayCell* _tc_content_window_get_content_at_func(TCWindow* tc_window, size_t x, size_t y);
+TCDisplayCell* _tc_content_window_get_content_at_func(TCWindow* content_window, size_t x, size_t y);
 
 #endif
