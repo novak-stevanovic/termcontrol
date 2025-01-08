@@ -9,17 +9,16 @@
 
 typedef enum TCBorderLayoutDirection { TC_NORTH, TC_EAST, TC_SOUTH, TC_WEST, TC_CENTER } TCBorderLayoutDirection;
 
-typedef struct TCBorderLayoutManagerDirection
+typedef struct TCBorderLMOptions
 {
     TCObject *object;
     size_t size;
-} TCBorderLayoutManagerDirection;
+} TCBorderLMOptions;
 
 typedef struct TCBorderLayoutManager
 {
     TCLayoutManager _base;
-    TCBorderLayoutManagerDirection _north, _east, _south, _west;
-    TCObject* _center;
+    TCBorderLMOptions _north, _east, _south, _west, _center;
 } TCBorderLayoutManager;
 
 void tc_border_lm_init(TCBorderLayoutManager* border_lm, TCLayoutContainer* layout_container);
@@ -31,5 +30,7 @@ TCObject* tc_border_lm_get_object(TCBorderLayoutManager* border_lm, TCBorderLayo
 
 void tc_border_lm_set_direction_size(TCBorderLayoutManager* border_lm, TCBorderLayoutDirection direction, size_t size);
 void tc_border_lm_set_object(TCBorderLayoutManager* border_lm, TCBorderLayoutDirection direction, TCObject* object);
+
+TCBorderLMOptions* get_tc_border_lm_opts(TCBorderLayoutManager* border_lm, TCBorderLayoutDirection direction);
 
 #endif
