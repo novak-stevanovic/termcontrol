@@ -1,7 +1,9 @@
+#include <stdlib.h>
 #include <termios.h>
 #include <stdio.h>
 #include <unistd.h>
 
+#include "tc_object/window/tc_content_window.h"
 #include "termcontrol.h"
 
 struct termios init_opts;
@@ -58,6 +60,12 @@ int main(int argc, char *argv[])
         if(str[0] == 'q') break;
         else printf("%c", str[0]);
     }
+
+    TCContentWindow* tc = (TCContentWindow*)malloc(sizeof(TCContentWindow));
+    tc_content_window_init(tc);
+
+    tc->_base._base.start_x = 0;
+    ((TCObject*)tc)->start_x = 0;
 
     reset_opts();
     return 0;

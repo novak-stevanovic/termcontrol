@@ -1,3 +1,0 @@
-#ifndef TC_GRID_LAYOUT_MANAGER_H
-#define TC_GRID_LAYOUT_MANAGER_H
-#endif

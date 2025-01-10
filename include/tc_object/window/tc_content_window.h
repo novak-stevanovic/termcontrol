@@ -7,7 +7,7 @@
 typedef struct TCContentWindow
 {
     struct TCWindow _base;
-    TCDisplayCell** _content;
+    TCDisplayCell** _content_buff;
 } TCContentWindow;
 
 void tc_content_window_init(TCContentWindow* content_window);

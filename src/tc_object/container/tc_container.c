@@ -13,5 +13,12 @@ void tc_container_init(TCContainer* container, void (*draw_func)(void*))
 
 struct Vector* tc_container_get_children(TCContainer* container)
 {
+    assert(container != NULL);
     return container->_children;
+}
+
+struct Vector* _tc_container_get_next_to_draw_func(void* container)
+{
+    assert(container != NULL);
+    return ((TCContainer*)(container))->_children;
 }

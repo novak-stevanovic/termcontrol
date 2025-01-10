@@ -16,4 +16,6 @@ TCDisplayCell* tc_window_get_content_at(TCWindow* window, size_t x, size_t y);
 
 void _tc_window_draw_func(void* window);
 
+struct Vector* _tc_window_get_next_to_draw_func(void* window);
+
 #endif

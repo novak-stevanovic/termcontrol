@@ -1,15 +1,16 @@
-#include "base/tc_display.h"
-#include "primitives/tc_erase_prims.h"
-#include "primitives/tc_color.h"
-#include "base/tc_cursor.h"
-#include "base/tc_shared.h"
-#include "vector.h"
 #include <assert.h>
 #include <stddef.h>
 #include <signal.h>
 #include <stdio.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
+
+#include "base/tc_display.h"
+#include "primitives/tc_erase_prims.h"
+#include "primitives/tc_color.h"
+#include "base/tc_cursor.h"
+#include "base/tc_shared.h"
+#include "vector.h"
 
 void _update_display_size();
 void _update_display_handler(int sig);
@@ -74,19 +75,19 @@ void tc_display_draw_tc_window(TCWindow* window)
     }
 }
 
-void tc_display_draw_tc_object_tree(TCContainer* container)
+void tc_display_draw_tc_object_tree(TCObject* tc_obj)
 {
-    if(container == NULL) return;
-    assert(container->_children != NULL);
+    assert(tc_obj != NULL);
 
-    container->_base._draw_func(container);
-
+    tc_object_draw(tc_obj);
+    struct Vector* next_to_draw = tc_object_get_next_to_draw(tc_obj);
+    if(next_to_draw == NULL) return;
+    
     int i;
-    for(i = 0; i < vec_get_count(container->_children); i++)
+    for(i = 0; i < vec_get_count(next_to_draw); i++)
     {
-        TCObject** curr_child = vec_at(container->_children, i); //TODO ???
-        assert((*curr_child)->_draw_func != NULL);
-        (*curr_child)->_draw_func(*curr_child);
+        TCObject** tc_obj_ptr = vec_at(next_to_draw, i);
+        tc_display_draw_tc_object_tree(*tc_obj_ptr);
     }
 }
 
