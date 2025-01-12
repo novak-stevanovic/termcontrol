@@ -1,7 +1,7 @@
 #ifndef TC_STYLE_PRIMS_H
 #define TC_STYLE_PRIMS_H
 
-enum TCColor;
+#include "tc_color.h"
 
 // #define GRAPHICS_SET_GRAPHICS_MODE_CODE "\e[%dm"
 #define GRAPHICS_RESET_MODE_CODE "\e[0m"
@@ -22,6 +22,9 @@ enum TCColor;
 // Background Colors
 #define COLOR_BG_CODE "\e[4%dm"
 
-int tc_color_get_code_for_tc_color(enum TCColor tc_color);
+int tc_prim_get_code_for_tc_color(TCColor tc_color);
+
+void tc_prim_set_fg_color(TCColor tc_color);
+void tc_prim_set_bg_color(TCColor tc_color);
 
 #endif

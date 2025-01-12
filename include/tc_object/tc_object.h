@@ -28,5 +28,8 @@ void tc_object_set_pref_size(TCObject* tc_obj, size_t pref_height, size_t pref_w
 size_t tc_object_get_pref_height(TCObject* tc_obj);
 size_t tc_object_get_pref_width(TCObject* tc_obj);
 
+size_t tc_object_calculate_actual_height(TCObject* tc_obj);
+size_t tc_object_calculate_actual_width(TCObject* tc_obj);
+
 #endif
 

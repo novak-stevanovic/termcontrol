@@ -61,3 +61,14 @@ size_t tc_object_get_pref_width(TCObject* tc_obj)
     assert(tc_obj != NULL);
     return tc_obj->_pref_width;
 }
+
+size_t tc_object_calculate_actual_height(TCObject* tc_obj)
+{
+    assert(tc_obj != NULL);
+
+    return (tc_obj->end_y - tc_obj->start_y);
+}
+size_t tc_object_calculate_actual_width(TCObject* tc_obj)
+{
+    return (tc_obj->end_x - tc_obj->start_x);
+}

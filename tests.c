@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include "base/tc_display.h"
+#include "base/tc_display_cell.h"
+#include "primitives/tc_color.h"
+#include "primitives/tc_style_prims.h"
 #include "tc_object/window/tc_content_window.h"
 #include "termcontrol.h"
 
@@ -40,10 +44,6 @@ void reset_opts()
     tcsetattr(STDOUT_FILENO, TCSAFLUSH, &init_opts);
 }
 
-void a()
-{
-}
-
 int main(int argc, char *argv[])
 {
     printf("In main\n");
@@ -53,19 +53,41 @@ int main(int argc, char *argv[])
     tc_init();
 
     char str[20];
+    tc_prim_set_bg_color(TC_COLOR_BLUE);
 
     while(1)
     {
         read(STDIN_FILENO, str, 1);
         if(str[0] == 'q') break;
+        else if(str[0] == 'c') tc_prim_set_bg_color(TC_COLOR_GREEN);
+
         else printf("%c", str[0]);
     }
 
-    TCContentWindow* tc = (TCContentWindow*)malloc(sizeof(TCContentWindow));
-    tc_content_window_init(tc);
-
-    tc->_base._base.start_x = 0;
-    ((TCObject*)tc)->start_x = 0;
+    // TCContentWindow* tc = (TCContentWindow*)malloc(sizeof(TCContentWindow));
+    // tc_content_window_init(tc);
+    //
+    // ((TCObject*)tc)->start_x = 0;
+    // ((TCObject*)tc)->start_y = 0;
+    // ((TCObject*)tc)->end_x = 5;
+    // ((TCObject*)tc)->end_y = 50;
+    //
+    // int i,j;
+    // for(i = 0; i < tc_object_calculate_actual_height((TCObject*)tc); i++)
+    // {
+    //     for(j = 0; j < tc_object_calculate_actual_width((TCObject*)tc); j++)
+    //     {
+    //         TCDisplayCell td = (TCDisplayCell) { 
+    //             .fg_color = TC_COLOR_RED,
+    //             .bg_color = TC_COLOR_BLUE,
+    //             .content = 'a'
+    //         };
+    //
+    //         tc_content_window_set_content_at(tc, j, i, &td);
+    //     }
+    // }
+    //
+    // tc_display_draw_tc_window((TCWindow*)tc);
 
     reset_opts();
     return 0;

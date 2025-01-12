@@ -14,7 +14,7 @@ void tc_content_window_init(TCContentWindow* content_window)
     _tc_content_window_init_content(content_window);
 }
 
-void _tc_content_window_set_content_at(TCContentWindow* content_window, size_t x, size_t y, TCDisplayCell* content_bp)
+void tc_content_window_set_content_at(TCContentWindow* content_window, size_t x, size_t y, TCDisplayCell* content_bp)
 {
     content_window->_content_buff[y][x].content = content_bp->content;
     content_window->_content_buff[y][x].bg_color = content_bp->bg_color;

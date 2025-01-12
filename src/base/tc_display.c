@@ -12,8 +12,8 @@
 #include "base/tc_shared.h"
 #include "vector.h"
 
-void _update_display_size();
-void _update_display_handler(int sig);
+void _tc_display_update_display_size();
+void _tc_display_update_display_handler(int sig);
 void _tc_display_content_init();
 
 // ---------------------------------------------------------------------------------------------------
@@ -30,12 +30,12 @@ void _tc_display_init()
 {
     tc_prim_erase_screen();
     struct sigaction new_sigact;
-    new_sigact.sa_handler = _update_display_handler;
+    new_sigact.sa_handler = _tc_display_update_display_handler;
     int status = sigaction(SIGWINCH, &new_sigact, NULL);
     assert(status == 0);
 
     _tc_display_content_init();
-    _update_display_size();
+    _tc_display_update_display_size();
 }
 
 void _tc_display_content_init()
@@ -69,7 +69,7 @@ void tc_display_draw_tc_window(TCWindow* window)
         for(j = w_start_x; j < w_end_x; j++)
         {
             tc_cursor_abs_move(i, j);
-            TCDisplayCell* content_cell = tc_window_get_content_at(window, i, j);
+            TCDisplayCell* content_cell = tc_window_get_content_at(window, j, i);
             putchar(content_cell->content);
         }
     }
@@ -103,12 +103,12 @@ size_t tc_display_get_display_height()
 
 // ------------------------------------------------------------------
 
-void _update_display_handler(int sig)
+void _tc_display_update_display_handler(int sig)
 {
-    _update_display_size();
+    _tc_display_update_display_size();
 }
 
-void _update_display_size()
+void _tc_display_update_display_size()
 {
     struct winsize win_size;
 
@@ -121,5 +121,5 @@ void _update_display_size()
 
     tc_cursor_conform_pos_to_scr();
 
-    printf("%ld %ld\n", display.height, display.width);
+    // printf("%ld %ld\n", display.height, display.width);
 }
