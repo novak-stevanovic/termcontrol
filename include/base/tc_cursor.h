@@ -4,8 +4,6 @@
 #include <stddef.h>
 #include <sys/types.h>
 
-typedef struct TCCursor TCCursor;
-
 extern struct TCCursor cursor;
 
 /* Initializes tc_cursor module. Moves cursor to 0,0 which starts tracking the cursor position */
@@ -47,5 +45,7 @@ void tc_cursor_abs_move_y(size_t row);
 /* Moves the cursor along both x and y axes absolutely to <row>, <col> respectively.
  * Calls the adequate cursor primitive for moving the cursor. Updates struct TCCursor cursor's x and y coordinates if needed. */
 void tc_cursor_abs_move(size_t row, size_t col);
+
+// void tc_colorize(TCColor color, size_t row, size_t col, int bg);
 
 #endif

@@ -1,9 +1,11 @@
+#include <stdio.h>
+
 #include "base/tc_cursor.h"
 #include "base/tc_display.h"
+#include "primitives/tc_style_prims.h"
 #include "tc_misc.h"
 
 #include "primitives/tc_cursor_prims.h"
-#include <stdio.h>
 
 void _set_cursor_pos(size_t x, size_t y);
 
@@ -56,7 +58,6 @@ void tc_cursor_print_chr(char c)
     {
         cursor.x++;
     }
-
 }
 
 void tc_cursor_rel_move(int row_diff, int col_diff)
@@ -99,3 +100,19 @@ void tc_cursor_abs_move(size_t row, size_t col)
     tc_prim_move_cursor_to_line_col(row, col);
     _set_cursor_pos(col, row);
 }
+
+// void tc_colorize(TCColor color, size_t row, size_t col, int bg)
+// {
+//     size_t cursor_x = cursor.x;
+//     size_t cursor_y = cursor.y;
+//
+//     tc_cursor_abs_move(row, col);
+//
+//     if(bg)
+//         tc_prim_set_bg_color(color);
+//     else
+//         tc_prim_set_fg_color(color);
+//
+//     tc_cursor_abs_move(cursor_y, cursor_x);
+//
+// }

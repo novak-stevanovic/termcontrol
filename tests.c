@@ -5,6 +5,7 @@
 
 #include "base/tc_display.h"
 #include "base/tc_display_cell.h"
+#include "base/tc_print_controller.h"
 #include "primitives/tc_color.h"
 #include "primitives/tc_style_prims.h"
 #include "tc_object/window/tc_content_window.h"
@@ -47,6 +48,7 @@ void reset_opts()
 int main(int argc, char *argv[])
 {
     printf("In main\n");
+    // printf("\033[?7l"); // Isključuje line wrapping    
     load_init_opts();
     conf_term_opts();
 
@@ -61,7 +63,7 @@ int main(int argc, char *argv[])
         if(str[0] == 'q') break;
         else if(str[0] == 'c') tc_prim_set_bg_color(TC_COLOR_GREEN);
 
-        else printf("%c", str[0]);
+        else tc_putchar(str[0]);
     }
 
     // TCContentWindow* tc = (TCContentWindow*)malloc(sizeof(TCContentWindow));

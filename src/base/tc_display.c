@@ -6,10 +6,10 @@
 #include <unistd.h>
 
 #include "base/tc_display.h"
+#include "base/tc_print_controller.h"
 #include "primitives/tc_erase_prims.h"
-#include "primitives/tc_color.h"
 #include "base/tc_cursor.h"
-#include "base/tc_shared.h"
+#include "primitives/tc_style_prims.h"
 #include "vector.h"
 
 void _tc_display_update_display_size();
@@ -21,7 +21,6 @@ void _tc_display_content_init();
 typedef struct TCDisplay
 {
     size_t height, width;
-    TCDisplayCell** content;
 } TCDisplay;
 
 TCDisplay display = {0};
@@ -34,24 +33,22 @@ void _tc_display_init()
     int status = sigaction(SIGWINCH, &new_sigact, NULL);
     assert(status == 0);
 
-    _tc_display_content_init();
+    // _tc_display_content_init();
     _tc_display_update_display_size();
 }
 
-void _tc_display_content_init()
+void tc_display_draw_tc_display_cell(TCDisplayCell* display_cell, size_t x, size_t y)
 {
-    display.content = (TCDisplayCell**)malloc(sizeof(TCDisplayCell*) * MAX_WINDOW_SIZE_Y);
-    int i, j;
-    for(i = 0; i < MAX_WINDOW_SIZE_Y; i++)
-    {
-        display.content[i] = (TCDisplayCell*)malloc(sizeof(TCDisplayCell) * MAX_WINDOW_SIZE_X);
-        for(j = 0; j < MAX_WINDOW_SIZE_X; j++)
-        {
-            display.content[i][j].content = 'u';
-            display.content[i][j].bg_color = TC_COLOR_BLUE;
-            display.content[i][j].fg_color = TC_COLOR_RED;
-        }
-    }
+    size_t cursor_x = tc_cursor_get_x();
+    size_t cursor_y = tc_cursor_get_y();
+
+    tc_cursor_abs_move(y, x);
+
+    tc_prim_set_bg_color(display_cell->bg_color);
+    tc_prim_set_fg_color(display_cell->fg_color);
+    tc_putchar(display_cell->content);
+
+    tc_cursor_abs_move(cursor_y, cursor_x);
 }
 
 void tc_display_draw_tc_window(TCWindow* window)
@@ -70,7 +67,7 @@ void tc_display_draw_tc_window(TCWindow* window)
         {
             tc_cursor_abs_move(i, j);
             TCDisplayCell* content_cell = tc_window_get_content_at(window, j, i);
-            putchar(content_cell->content);
+            tc_display_draw_tc_display_cell(content_cell, j, i);
         }
     }
 }
