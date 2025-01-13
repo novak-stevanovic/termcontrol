@@ -6,13 +6,15 @@
 
 typedef struct TCWindow // ABSTRACT
 {
-    struct TCObject _base;
-    TCDisplayCell* (*get_content_at_func)(struct TCWindow*, size_t, size_t);
+    TCObject _base;
+    TCDisplayCell* (*_get_content_at_func)(struct TCWindow*, size_t, size_t);
+    void (*_pre_draw_func)(struct TCWindow*); // do something before drawing _content
 } TCWindow;
 
-void tc_window_init(TCWindow* window, TCDisplayCell* (*get_content_at_func)(struct TCWindow*, size_t, size_t)); // constructor
+void tc_window_init(TCWindow* window, TCDisplayCell* (*get_content_at_func)(struct TCWindow*, size_t, size_t), void (*pre_draw_func)(struct TCWindow*)); // constructor
 
 TCDisplayCell* tc_window_get_content_at(TCWindow* window, size_t x, size_t y);
+void _tc_window_pre_draw(TCWindow* window);
 
 void _tc_window_draw_func(void* window);
 

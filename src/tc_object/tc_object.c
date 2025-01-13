@@ -2,12 +2,13 @@
 
 #include "tc_object/tc_object.h"
 
-void tc_object_init(TCObject* tc_obj, void (*draw_func)(void*))
+void tc_object_init(TCObject* tc_obj, void (*draw_func)(void*), struct Vector* (*get_next_to_draw_func)(void*))
 {
     assert(tc_obj != NULL);
     tc_object_set_positions(tc_obj, 0, 0, 0, 0);
     tc_object_set_pref_size(tc_obj, 0, 0);
     tc_obj->_draw_func = draw_func;
+    tc_obj->_get_next_to_draw_func = get_next_to_draw_func;
 }
 
 void tc_object_set_positions(TCObject* tc_obj, size_t start_x, size_t start_y, size_t end_x, size_t end_y)

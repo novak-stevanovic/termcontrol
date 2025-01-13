@@ -21,6 +21,7 @@ void _tc_display_content_init();
 typedef struct TCDisplay
 {
     size_t height, width;
+    TCColor fg_color, bg_color;
 } TCDisplay;
 
 TCDisplay display = {0};
@@ -35,10 +36,16 @@ void _tc_display_init()
 
     // _tc_display_content_init();
     _tc_display_update_display_size();
+
+    display.fg_color = TC_COLOR_DEFAULT;
+    display.bg_color = TC_COLOR_DEFAULT;
 }
 
 void tc_display_draw_tc_display_cell(TCDisplayCell* display_cell, size_t x, size_t y)
 {
+    TCColor fg_color = tc_display_get_fg_color();
+    TCColor bg_color = tc_display_get_bg_color();
+
     size_t cursor_x = tc_cursor_get_x();
     size_t cursor_y = tc_cursor_get_y();
 
@@ -49,10 +56,15 @@ void tc_display_draw_tc_display_cell(TCDisplayCell* display_cell, size_t x, size
     tc_putchar(display_cell->content);
 
     tc_cursor_abs_move(cursor_y, cursor_x);
+    tc_display_set_fg_color(fg_color);
+    tc_display_set_bg_color(bg_color);
 }
 
-void tc_display_draw_tc_window(TCWindow* window)
+void _tc_display_draw_tc_window(TCWindow* window)
 {
+    TCColor fg_color = tc_display_get_fg_color();
+    TCColor bg_color = tc_display_get_bg_color();
+
     size_t cursor_x = tc_cursor_get_x();
     size_t cursor_y = tc_cursor_get_y();
 
@@ -76,11 +88,15 @@ void tc_display_draw_tc_window(TCWindow* window)
     }
 
     tc_cursor_abs_move(cursor_y, cursor_x);
+    tc_display_set_fg_color(fg_color);
+    tc_display_set_bg_color(bg_color);
 }
 
 void tc_display_draw_tc_object_tree(TCObject* tc_obj)
 {
     assert(tc_obj != NULL);
+    TCColor fg_color = tc_display_get_fg_color();
+    TCColor bg_color = tc_display_get_bg_color();
 
     tc_object_draw(tc_obj);
     struct Vector* next_to_draw = tc_object_get_next_to_draw(tc_obj);
@@ -92,6 +108,9 @@ void tc_display_draw_tc_object_tree(TCObject* tc_obj)
         TCObject** tc_obj_ptr = vec_at(next_to_draw, i);
         tc_display_draw_tc_object_tree(*tc_obj_ptr);
     }
+
+    tc_display_set_fg_color(fg_color);
+    tc_display_set_bg_color(bg_color);
 }
 
 size_t tc_display_get_display_width()
@@ -102,6 +121,25 @@ size_t tc_display_get_display_width()
 size_t tc_display_get_display_height()
 {
     return display.height;
+}
+
+TCColor tc_display_get_fg_color()
+{
+    return display.fg_color;
+}
+TCColor tc_display_get_bg_color()
+{
+    return display.bg_color;
+}
+void tc_display_set_fg_color(TCColor color)
+{
+    tc_prim_set_fg_color(color);
+    display.fg_color = color;
+}
+void tc_display_set_bg_color(TCColor color)
+{
+    tc_prim_set_bg_color(color);
+    display.bg_color = color;
 }
 
 // ------------------------------------------------------------------

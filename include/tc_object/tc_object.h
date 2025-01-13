@@ -15,7 +15,7 @@ typedef struct TCObject // "ABSTRACT"
                                                      // that need to be drawn next.
 } TCObject;
 
-void tc_object_init(TCObject* tc_obj, void (*draw_func)(void*));
+void tc_object_init(TCObject* tc_obj, void (*draw_func)(void*), struct Vector* (*_get_next_to_draw_func)(void*));
 
 void tc_object_draw(TCObject* tc_obj);
 struct Vector* tc_object_get_next_to_draw(TCObject* tc_obj);

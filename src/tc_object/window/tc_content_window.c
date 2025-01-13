@@ -7,9 +7,9 @@ void _tc_content_window_init_content(TCContentWindow* content_window);
 
 // ---------------------------------------------------------------------------------------------------
 
-void tc_content_window_init(TCContentWindow* content_window)
+void tc_content_window_init(TCContentWindow* content_window, void (*pre_draw_func)(struct TCWindow*))
 {
-    tc_window_init((TCWindow*)content_window, _tc_content_window_get_content_at_func);
+    tc_window_init((TCWindow*)content_window, _tc_content_window_get_content_at_func, pre_draw_func);
 
     _tc_content_window_init_content(content_window);
 }
@@ -29,18 +29,18 @@ TCDisplayCell* _tc_content_window_get_content_at_func(TCWindow* cwidnow, size_t 
 
 // ---------------------------------------------------------------------------------------------------
 
-void _tc_content_window_init_content(TCContentWindow* cwidnow)
+void _tc_content_window_init_content(TCContentWindow* content_window)
 {
-    cwidnow->_content_buff = (TCDisplayCell**)malloc(sizeof(TCDisplayCell*) * MAX_WINDOW_SIZE_Y);
+    content_window->_content_buff = (TCDisplayCell**)malloc(sizeof(TCDisplayCell*) * MAX_WINDOW_SIZE_Y);
     int i, j;
     for(i = 0; i < MAX_WINDOW_SIZE_Y; i++)
     {
-        cwidnow->_content_buff[i] = (TCDisplayCell*)malloc(sizeof(TCDisplayCell) * MAX_WINDOW_SIZE_X);
+        content_window->_content_buff[i] = (TCDisplayCell*)malloc(sizeof(TCDisplayCell) * MAX_WINDOW_SIZE_X);
         for(j = 0; j < MAX_WINDOW_SIZE_X; j++)
         {
-            cwidnow->_content_buff[i][j].content = 'u';
-            cwidnow->_content_buff[i][j].bg_color = TC_COLOR_RED;
-            cwidnow->_content_buff[i][j].fg_color = TC_COLOR_BLACK;
+            content_window->_content_buff[i][j].content = ' ';
+            content_window->_content_buff[i][j].bg_color = TC_COLOR_RED;
+            content_window->_content_buff[i][j].fg_color = TC_COLOR_WHITE;
         }
     }
 }

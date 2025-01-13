@@ -7,7 +7,7 @@ void tc_container_init(TCContainer* container, void (*draw_func)(void*))
 {
     assert(container != NULL);
 
-    tc_object_init((TCObject*)container, draw_func);
+    tc_object_init((TCObject*)container, draw_func, _tc_container_get_next_to_draw_func);
     container->_children = vec_init(3, 2, sizeof(TCObject*));
 }
 
