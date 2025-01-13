@@ -1,8 +1,10 @@
 #include <stdlib.h>
+#include <string.h>
 #include <termios.h>
 #include <stdio.h>
 #include <unistd.h>
 
+#include "base/tc_cursor.h"
 #include "base/tc_display.h"
 #include "base/tc_display_cell.h"
 #include "base/tc_print_controller.h"
@@ -55,41 +57,56 @@ int main(int argc, char *argv[])
     tc_init();
 
     char str[20];
-    tc_prim_set_bg_color(TC_COLOR_BLUE);
+    //tc_prim_set_bg_color(TC_COLOR_BLUE);
 
+    TCContentWindow* tc = (TCContentWindow*)malloc(sizeof(TCContentWindow));
+    tc_content_window_init(tc);
+
+    ((TCObject*)tc)->start_x = 20;
+    ((TCObject*)tc)->start_y = 20;
+    ((TCObject*)tc)->end_x = 28;
+    ((TCObject*)tc)->end_y = 21;
+
+    int i;
+        size_t cursor_x = tc_cursor_get_x();
+        size_t cursor_y = tc_cursor_get_y();
+        char buff[20];
+        snprintf(buff, 20, "%ld %ld", cursor_x, cursor_y);
+
+        TCDisplayCell tcd_bp = (TCDisplayCell) {
+            .content = '0',
+            .bg_color = TC_COLOR_YELLOW,
+            .fg_color = TC_COLOR_GREEN
+        };
+        for(i = 0; i < strlen(buff); i++)
+        {
+            tcd_bp.content = buff[i];
+            tc_content_window_set_content_at(tc, i, 0, &tcd_bp);
+        }
+        tc_display_draw_tc_window((TCWindow*)tc);
     while(1)
     {
         read(STDIN_FILENO, str, 1);
         if(str[0] == 'q') break;
         else if(str[0] == 'c') tc_prim_set_bg_color(TC_COLOR_GREEN);
+        tc_putchar(str[0]);
+        size_t cursor_x = tc_cursor_get_x();
+        size_t cursor_y = tc_cursor_get_y();
+        char buff[20];
+        snprintf(buff, 20, "%ld %ld", cursor_x, cursor_y);
 
-        else tc_putchar(str[0]);
+        TCDisplayCell tcd_bp = (TCDisplayCell) {
+            .content = '0',
+            .bg_color = TC_COLOR_YELLOW,
+            .fg_color = TC_COLOR_GREEN
+        };
+        for(i = 0; i < strlen(buff); i++)
+        {
+            tcd_bp.content = buff[i];
+            tc_content_window_set_content_at(tc, i, 0, &tcd_bp);
+        }
+        tc_display_draw_tc_window((TCWindow*)tc);
     }
-
-    // TCContentWindow* tc = (TCContentWindow*)malloc(sizeof(TCContentWindow));
-    // tc_content_window_init(tc);
-    //
-    // ((TCObject*)tc)->start_x = 0;
-    // ((TCObject*)tc)->start_y = 0;
-    // ((TCObject*)tc)->end_x = 5;
-    // ((TCObject*)tc)->end_y = 50;
-    //
-    // int i,j;
-    // for(i = 0; i < tc_object_calculate_actual_height((TCObject*)tc); i++)
-    // {
-    //     for(j = 0; j < tc_object_calculate_actual_width((TCObject*)tc); j++)
-    //     {
-    //         TCDisplayCell td = (TCDisplayCell) { 
-    //             .fg_color = TC_COLOR_RED,
-    //             .bg_color = TC_COLOR_BLUE,
-    //             .content = 'a'
-    //         };
-    //
-    //         tc_content_window_set_content_at(tc, j, i, &td);
-    //     }
-    // }
-    //
-    // tc_display_draw_tc_window((TCWindow*)tc);
 
     reset_opts();
     return 0;

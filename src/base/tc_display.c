@@ -53,6 +53,10 @@ void tc_display_draw_tc_display_cell(TCDisplayCell* display_cell, size_t x, size
 
 void tc_display_draw_tc_window(TCWindow* window)
 {
+    size_t cursor_x = tc_cursor_get_x();
+    size_t cursor_y = tc_cursor_get_y();
+
+    // printf("%ld %ld", cursor_y, cursor_x);
     assert(window != NULL);
 
     int w_start_x = window->_base.start_x;
@@ -61,15 +65,17 @@ void tc_display_draw_tc_window(TCWindow* window)
     int w_end_y = window->_base.end_y;
 
     int i,j;
-    for(i = w_start_y; i < w_end_y; i++)
+    for(i = 0; i < w_end_y - w_start_y; i++)
     {
-        for(j = w_start_x; j < w_end_x; j++)
+        for(j = 0; j < w_end_x - w_start_x; j++)
         {
-            tc_cursor_abs_move(i, j);
+            tc_cursor_abs_move(w_start_y + i, w_start_x + j);
             TCDisplayCell* content_cell = tc_window_get_content_at(window, j, i);
-            tc_display_draw_tc_display_cell(content_cell, j, i);
+            tc_display_draw_tc_display_cell(content_cell, w_start_x + j, w_start_y + i);
         }
     }
+
+    tc_cursor_abs_move(cursor_y, cursor_x);
 }
 
 void tc_display_draw_tc_object_tree(TCObject* tc_obj)
